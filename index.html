@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claudinea Imóveis | Corretora de Imóveis em Contenda - PR</title>
+<meta name="description" content="Claudinea Imóveis, corretora em Contenda-PR (CRECI 13.755 · CNAI 46.500). Casas, terrenos, áreas rurais e salas comerciais para venda e locação.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mata:#2A2A2E;
+    --mata-2:#3A3A40;
+    --terra:#B08D57;
+    --terra-esc:#8E6F3E;
+    --trigo:#D9BE8C;
+    --creme:#F6F4F0;
+    --creme-2:#ECE6DC;
+    --texto:#1F2A24;
+    --texto-2:#5F6A63;
+    --whats:#25D366;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--creme);color:var(--texto);line-height:1.65;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .container{width:min(1160px,100% - 32px);margin-inline:auto}
+  h1,h2,h3{font-family:'Outfit',sans-serif;font-weight:500;letter-spacing:-.5px}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(244,246,249,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(30,59,44,.08)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .mono{width:44px;height:44px;border-radius:12px;background:var(--mata);color:var(--trigo);display:grid;place-items:center;font-family:'Outfit';font-weight:600;font-size:1.05rem;letter-spacing:.5px}
+  .brand b{font-family:'Outfit';font-weight:500;font-size:1.15rem;display:block;line-height:1.1;color:var(--mata)}
+  .brand small{font-size:.72rem;color:var(--texto-2);letter-spacing:1.5px;text-transform:uppercase}
+  .nav ul{display:flex;gap:28px;list-style:none;font-size:.9rem;color:var(--texto-2)}
+  .nav ul a:hover{color:var(--mata)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 26px;border-radius:12px;font-weight:600;font-size:.92rem;transition:transform .2s,background .2s;border:none;cursor:pointer;font-family:'Inter'}
+  .btn:hover{transform:translateY(-2px)}
+  .btn svg{width:19px;height:19px;flex-shrink:0}
+  .btn-mata{background:var(--mata);color:#fff}
+  .btn-mata:hover{background:var(--mata-2)}
+  .btn-terra{background:var(--terra);color:#fff}
+  .btn-terra:hover{background:var(--terra-esc)}
+  .btn-linha{border:1.5px solid var(--mata);color:var(--mata);background:transparent}
+  .btn-sm{padding:10px 18px;font-size:.84rem}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;background:var(--mata);color:#fff;padding:80px 0 120px}
+  .hero .hills{position:absolute;inset:auto 0 0 0;width:100%;height:260px;pointer-events:none}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+  .tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:7px 14px;border-radius:999px;font-size:.8rem;color:rgba(255,255,255,.85);margin-bottom:22px}
+  .tag i{width:7px;height:7px;border-radius:50%;background:var(--trigo);display:inline-block}
+  h1{font-size:clamp(2.4rem,5vw,3.9rem);line-height:1.06;margin-bottom:20px}
+  h1 span{color:var(--trigo)}
+  .lead{font-size:1.08rem;color:rgba(255,255,255,.78);max-width:520px;margin-bottom:32px}
+
+  .search{background:#fff;color:var(--texto);border-radius:18px;padding:18px;box-shadow:0 30px 60px -30px rgba(0,0,0,.55);display:grid;grid-template-columns:1.25fr 1fr 1fr auto;gap:10px;align-items:end;max-width:700px}
+  .search label{display:block;font-size:.7rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--texto-2);margin:0 0 6px 2px}
+  .search select{appearance:none;border:1px solid rgba(30,59,44,.15);border-radius:10px;padding:12px 34px 12px 14px;font-family:'Inter';font-size:.9rem;color:var(--texto);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235F6A63' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") no-repeat right 12px center;width:100%}
+  .search .btn{padding:13px 22px}
+  .hint{font-size:.82rem;color:rgba(255,255,255,.65);margin-top:14px}
+
+  .hero-side{display:grid;gap:14px}
+  .stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:22px 24px;display:flex;align-items:center;gap:18px}
+  .stat .n{font-family:'Outfit';font-size:2.2rem;font-weight:500;color:var(--trigo);line-height:1;min-width:86px}
+  .stat p{font-size:.92rem;color:rgba(255,255,255,.78);line-height:1.45}
+
+  section{padding:96px 0}
+  .head{max-width:640px;margin-bottom:40px}
+  .kicker{font-size:.76rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--terra-esc);margin-bottom:10px}
+  h2{font-size:clamp(2rem,4vw,2.8rem);line-height:1.12;color:var(--mata);margin-bottom:12px}
+  .head p{color:var(--texto-2)}
+
+  /* filtros + cards */
+  .filtros{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+  .filtros button{border:1px solid rgba(30,59,44,.18);background:#fff;color:var(--mata);padding:9px 16px;border-radius:999px;font-family:'Inter';font-size:.86rem;font-weight:500;cursor:pointer}
+  .filtros button.on{background:var(--mata);color:#fff;border-color:var(--mata)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{background:#fff;border-radius:20px;overflow:hidden;border:1px solid rgba(30,59,44,.08);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-6px);box-shadow:0 30px 50px -30px rgba(30,59,44,.45)}
+  .card.hide{display:none}
+  .card .img{aspect-ratio:16/11;background:linear-gradient(150deg,var(--creme-2),#C9D5E2);display:grid;place-items:center;position:relative;overflow:hidden}
+  .card .img svg{width:40%;color:var(--mata);opacity:.45}
+  .card .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .badge{position:absolute;top:14px;left:14px;background:var(--mata);color:#fff;font-size:.72rem;font-weight:600;padding:5px 10px;border-radius:8px;z-index:1}
+  .cod{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.9);font-size:.7rem;font-weight:600;padding:4px 8px;border-radius:6px;color:var(--texto-2);z-index:1}
+  .card .info{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+  .card h3{font-size:1.2rem;color:var(--mata);margin-bottom:2px}
+  .card .loc{font-size:.85rem;color:var(--texto-2);margin-bottom:14px}
+  .feats{display:flex;gap:16px;font-size:.84rem;color:var(--texto-2);padding:12px 0;border-top:1px solid var(--creme-2);border-bottom:1px solid var(--creme-2);margin-bottom:16px}
+  .feats span:first-child{font-weight:600;color:var(--texto)}
+  .card .row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;gap:10px}
+  .price{font-family:'Outfit';font-weight:500;font-size:1.2rem;color:var(--mata)}
+  .card .row a{font-size:.84rem;font-weight:600;color:var(--terra-esc);white-space:nowrap}
+  .mais{text-align:center;margin-top:36px}
+
+  /* serviços */
+  .dark{background:var(--mata);color:#fff}
+  .dark h2{color:#fff}
+  .dark .head p{color:rgba(255,255,255,.72)}
+  .dark .kicker{color:var(--trigo)}
+  .serv{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .sv{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:30px 24px}
+  .sv .ic{width:52px;height:52px;border-radius:14px;background:var(--trigo);display:grid;place-items:center;margin-bottom:20px}
+  .sv .ic svg{width:26px;height:26px;color:var(--mata)}
+  .sv h3{font-size:1.2rem;margin-bottom:8px}
+  .sv p{font-size:.9rem;color:rgba(255,255,255,.72)}
+
+  /* vender */
+  .sell{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center;background:#fff;border-radius:28px;padding:56px;border:1px solid rgba(30,59,44,.08)}
+  .sell ul{list-style:none;margin:22px 0 30px}
+  .sell li{display:flex;gap:12px;margin-bottom:12px;color:var(--texto-2)}
+  .sell li::before{content:"";width:22px;height:22px;border-radius:50%;background:var(--trigo) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314365A' stroke-width='3'%3E%3Cpath d='m5 12 5 5 9-10'/%3E%3C/svg%3E") no-repeat center/13px;flex-shrink:0;margin-top:2px}
+  .sell-art{background:var(--mata);border-radius:22px;aspect-ratio:1/1;display:grid;place-items:center;overflow:hidden}
+  .sell-art svg{width:100%;height:100%}
+
+  /* sobre + mapa */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .about p{color:var(--texto-2);margin-bottom:16px}
+  .creci{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(30,59,44,.12);border-radius:10px;padding:8px 14px;font-size:.85rem;font-weight:600;color:var(--mata);margin-bottom:22px}
+  .pend{background:#FFE9A8;padding:0 5px;border-radius:4px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 28px}
+  .chips span{background:#fff;border:1px solid rgba(30,59,44,.12);border-radius:999px;padding:6px 14px;font-size:.84rem;color:var(--mata)}
+  .contato{list-style:none;margin-bottom:26px}
+  .contato li{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;font-size:.95rem}
+  .contato svg{width:20px;height:20px;color:var(--terra);flex-shrink:0;margin-top:3px}
+  .mapa{border-radius:24px;overflow:hidden;border:1px solid rgba(30,59,44,.1);background:var(--creme-2);aspect-ratio:1/1}
+  .mapa iframe{width:100%;height:100%;border:0;display:block}
+
+  .cta{background:linear-gradient(120deg,var(--mata),var(--mata-2));border-radius:28px;padding:60px 40px;text-align:center;color:#fff}
+  .cta h2{color:#fff}
+  .cta p{color:rgba(255,255,255,.78);max-width:520px;margin:0 auto 28px}
+
+  footer{padding:40px 0;text-align:center;font-size:.82rem;color:var(--texto-2);border-top:1px solid rgba(30,59,44,.08);margin-top:40px}
+
+  .whats-float{position:fixed;bottom:22px;right:22px;z-index:60;width:62px;height:62px;border-radius:50%;background:var(--whats);display:grid;place-items:center;box-shadow:0 10px 25px -6px rgba(0,0,0,.35);animation:pulse 2.6s infinite}
+  .whats-float svg{width:32px;height:32px;color:#fff}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}50%{box-shadow:0 0 0 14px rgba(37,211,102,0)}}
+
+  @media (max-width:980px){
+    .hero-grid,.sell,.about{grid-template-columns:1fr}
+    .cards{grid-template-columns:1fr 1fr}
+    .serv{grid-template-columns:1fr 1fr}
+    .nav ul{display:none}
+    .sell{padding:40px 28px}
+    .hero-side{grid-template-columns:repeat(3,1fr)}
+    .stat{flex-direction:column;align-items:flex-start;gap:8px}
+    .stat .n{min-width:0}
+  }
+  @media (max-width:620px){
+    .search{grid-template-columns:1fr 1fr}
+    .search .f-full,.search .btn{grid-column:1/-1}
+    .cards,.serv,.hero-side{grid-template-columns:1fr}
+    .stat{flex-direction:row;align-items:center}
+    .stat .n{min-width:78px;font-size:1.9rem}
+    section{padding:70px 0}
+    .hero{padding:48px 0 110px}
+    .brand small{display:none}
+    .cta{padding:44px 22px}
+    .sell{padding:32px 22px}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-5-4.4-5.1-4.6-.2-.2-1.2-1.6-1.2-3s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.2.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.4Z"/></symbol>
+  <symbol id="home" viewBox="0 0 120 100"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M14 52 52 22l38 30"/><path d="M24 45v42h56V45"/><rect x="45" y="62" width="14" height="25"/><path d="M96 87V60M96 60c-8 0-12-8-6-14 0-8 12-8 12 0 6 6 2 14-6 14Z"/><path d="M6 88h108"/></g></symbol>
+  <symbol id="terreno" viewBox="0 0 120 100"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M10 80 40 60l30 12 40-24"/><path d="M10 92h100"/><path d="M60 20v30"/><path d="M60 20h24l-6 7 6 7H60"/></g></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></g></symbol>
+  <symbol id="mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></g></symbol>
+  <symbol id="phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
+</svg>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="brand" style="flex-direction:column;align-items:flex-start;gap:0"><b style="font-family:'Outfit';font-weight:400;font-size:1.7rem;letter-spacing:.5px;color:#222;line-height:1">Claudinea</b><small style="display:block;border-top:1px solid #ccc;padding-top:3px;margin-top:3px;letter-spacing:1.5px;color:#666;text-transform:none;font-size:.72rem">Creci 13755 &nbsp;·&nbsp; imóveis</small></a>
+    <ul>
+      <li><a href="#imoveis">Imóveis</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#vender">Vender</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <a class="btn btn-mata btn-sm" href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Claudinea%20Im%C3%B3veis." target="_blank" rel="noopener"><svg><use href="#wa"/></svg>WhatsApp</a>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="hills" viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 170 C180 120 320 150 480 130 S800 70 980 110 S1290 160 1440 120 V260 H0Z" fill="#3A3A40"/>
+    <path d="M0 210 C220 170 420 200 620 185 S980 150 1180 180 S1360 200 1440 190 V260 H0Z" fill="#4A4A52"/>
+    <path d="M0 240 C260 225 520 245 760 235 S1180 222 1440 238 V260 H0Z" fill="#F6F4F0"/>
+  </svg>
+  <div class="container hero-grid">
+    <div>
+      <div class="tag"><i></i> Corretora de imóveis em Contenda · CRECI 13.755</div>
+      <h1>O imóvel que você procura <span>está aqui</span></h1>
+      <p class="lead">Casas, terrenos, áreas rurais e salas comerciais em Contenda e região, com transparência, responsabilidade e segurança jurídica do primeiro contato até a escritura.</p>
+
+      <div class="search">
+        <div><label for="tipo">Tipo</label><select id="tipo"><option>Casa</option><option>Terreno</option><option>Área rural / chácara</option><option>Sala comercial (locação)</option></select></div>
+        <div><label for="cidade">Bairro</label><select id="cidade"><option>Centro</option><option>Itaperubá</option><option>Mato Branco</option><option>Jardim São João</option><option>Serrinha</option><option>Outro bairro</option></select></div>
+        <div class="f-full"><label for="valor">Até quanto?</label><select id="valor"><option>Até R$ 250 mil</option><option>R$ 250 a 500 mil</option><option>R$ 500 a 800 mil</option><option>Acima de R$ 800 mil</option></select></div>
+        <a class="btn btn-terra" id="buscar" href="#" target="_blank" rel="noopener">Buscar</a>
+      </div>
+      <div class="hint">Escolha o que procura e receba as opções direto no WhatsApp.</div>
+    </div>
+
+    <div class="hero-side">
+      <div class="stat"><span class="n">5,0★</span><p>nota dos clientes no Google</p></div>
+      <div class="stat"><span class="n">18+</span><p>imóveis entre venda e locação em Contenda</p></div>
+      <div class="stat"><span class="n" style="font-size:1.5rem">CNAI</span><p>avaliação oficial de imóveis (PTAM)</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="imoveis" style="padding-top:60px">
+  <div class="container">
+    <div class="head">
+      <div class="kicker">Imóveis em destaque</div>
+      <h2>Oportunidades disponíveis agora</h2>
+      <p>Uma seleção da carteira atual. Chame no WhatsApp para fotos, documentação e visita.</p>
+    </div>
+    <div class="filtros">
+      <button class="on" data-f="todos">Todos</button>
+      <button data-f="casa">Casas</button>
+      <button data-f="terreno">Terrenos e áreas</button>
+      <button data-f="locacao">Locação</button>
+    </div>
+    <div class="cards">
+      <article class="card" data-tipo="casa">
+        <div class="img"><svg><use href="#home"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202603311711439141.jpg" alt="Casa de esquina com 3 vagas em Itaperubá, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Casa</span><span class="cod">Cód. CA019</span></div>
+        <div class="info">
+          <h3>Casa de esquina com 3 vagas</h3>
+          <div class="loc">Itaperubá · Contenda, PR</div>
+          <div class="feats"><span>155 m² construídos</span><span>2 quartos</span></div>
+          <div class="row"><span class="price">R$ 320.000</span><a href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%20c%C3%B3d.%20CA019%20%28Casa%20de%20esquina%20com%203%20vagas%2C%20Itaperub%C3%A1%29." target="_blank" rel="noopener">Tenho interesse →</a></div>
+        </div>
+      </article>
+      <article class="card" data-tipo="casa">
+        <div class="img"><svg><use href="#home"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202605052021242831.png" alt="Casa em terreno de 1.215 m² em Mato Branco, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Casa</span><span class="cod">Cód. CA020</span></div>
+        <div class="info">
+          <h3>Casa em terreno de 1.215 m²</h3>
+          <div class="loc">Mato Branco · Contenda, PR</div>
+          <div class="feats"><span>2 quartos</span><span>2 banheiros</span></div>
+          <div class="row"><span class="price">R$ 270.000</span><a href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%20c%C3%B3d.%20CA020%20%28Casa%20em%20terreno%20de%201.215%20m%C2%B2%2C%20Mato%20Branco%29." target="_blank" rel="noopener">Tenho interesse →</a></div>
+        </div>
+      </article>
+      <article class="card" data-tipo="casa">
+        <div class="img"><svg><use href="#home"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202503181413579579.jpg" alt="Casa em condomínio em Centro, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Casa</span><span class="cod">Cód. CA012</span></div>
+        <div class="info">
+          <h3>Casa em condomínio</h3>
+          <div class="loc">Centro · Contenda, PR</div>
+          <div class="feats"><span>2 quartos</span><span>1 vaga</span></div>
+          <div class="row"><span class="price">R$ 280.000</span><a href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%20c%C3%B3d.%20CA012%20%28Casa%20em%20condom%C3%ADnio%2C%20Centro%29." target="_blank" rel="noopener">Tenho interesse →</a></div>
+        </div>
+      </article>
+      <article class="card" data-tipo="casa">
+        <div class="img"><svg><use href="#home"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202509091646071141.jpg" alt="Casa alto padrão mobiliada em Centro, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Casa</span><span class="cod">Cód. CA004</span></div>
+        <div class="info">
+          <h3>Casa alto padrão mobiliada</h3>
+          <div class="loc">Centro · Contenda, PR</div>
+          <div class="feats"><span>288 m²</span><span>4 quartos · suíte</span></div>
+          <div class="row"><span class="price">R$ 2.300.000</span><a href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%20c%C3%B3d.%20CA004%20%28Casa%20alto%20padr%C3%A3o%20mobiliada%2C%20Centro%29." target="_blank" rel="noopener">Tenho interesse →</a></div>
+        </div>
+      </article>
+      <article class="card" data-tipo="terreno">
+        <div class="img"><svg><use href="#terreno"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202509111530433117.jpg" alt="Terreno no Cond. Castel Sant'Angelo em Centro, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Terreno</span><span class="cod">Cód. TE012</span></div>
+        <div class="info">
+          <h3>Terreno no Cond. Castel Sant'Angelo</h3>
+          <div class="loc">Centro · Contenda, PR</div>
+          <div class="feats"><span>252 m²</span></div>
+          <div class="row"><span class="price">R$ 196.000</span><a href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%20c%C3%B3d.%20TE012%20%28Terreno%20no%20Cond.%20Castel%20Sant%27Angelo%2C%20Centro%29." target="_blank" rel="noopener">Tenho interesse →</a></div>
+        </div>
+      </article>
+      <article class="card" data-tipo="terreno">
+        <div class="img"><svg><use href="#terreno"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202604262256282725.png" alt="Área rural de 4,4 hectares em Campestre, Lagoão e Turvo, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Área rural</span><span class="cod">Cód. TE018</span></div>
+        <div class="info">
+          <h3>Área rural de 4,4 hectares</h3>
+          <div class="loc">Campestre, Lagoão e Turvo · Contenda, PR</div>
+          <div class="feats"><span>44.921 m²</span></div>
+          <div class="row"><span class="price">R$ 430.000</span><a href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%20c%C3%B3d.%20TE018%20%28%C3%81rea%20rural%20de%204%2C4%20hectares%2C%20Campestre%2C%20Lago%C3%A3o%20e%20Turvo%29." target="_blank" rel="noopener">Tenho interesse →</a></div>
+        </div>
+      </article>
+      <article class="card" data-tipo="locacao">
+        <div class="img"><svg><use href="#home"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202512161519285094.jpg" alt="Sala comercial com mezanino em Centro, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Locação</span><span class="cod">Cód. SL015L</span></div>
+        <div class="info">
+          <h3>Sala comercial com mezanino</h3>
+          <div class="loc">Centro · Contenda, PR</div>
+          <div class="feats"><span>53 m²</span><span>banheiro privativo</span></div>
+          <div class="row"><span class="price">R$ 1.800/mês</span><a href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%20c%C3%B3d.%20SL015L%20%28Sala%20comercial%20com%20mezanino%2C%20Centro%29." target="_blank" rel="noopener">Tenho interesse →</a></div>
+        </div>
+      </article>
+    </div>
+    <div class="mais"><a class="btn btn-linha" href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Estou%20procurando%20um%20im%C3%B3vel%20em%20Contenda." target="_blank" rel="noopener">Ver todos os imóveis disponíveis</a></div>
+  </div>
+</section>
+
+<section class="dark" id="servicos">
+  <div class="container">
+    <div class="head">
+      <div class="kicker">Como ajudamos</div>
+      <h2>Da primeira visita até a escritura</h2>
+      <p>Comprar, vender ou alugar tem muita burocracia. A Claudinea acompanha cada etapa com você, com transparência e segurança jurídica.</p>
+    </div>
+    <div class="serv">
+      <div class="sv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></div><h3>Busca do imóvel</h3><p>Opções que cabem no seu orçamento, no bairro que você quer.</p></div>
+      <div class="sv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg></div><h3>Financiamento</h3><p>Simulação nos principais bancos e ajuda para escolher a melhor condição.</p></div>
+      <div class="sv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h6"/></svg></div><h3>Regularização</h3><p>Assessoria documental: matrícula, certidões e regularização do imóvel.</p></div>
+      <div class="sv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18M5 20V10l7-5 7 5v10"/><path d="M10 20v-5h4v5"/></svg></div><h3>Avaliação (PTAM)</h3><p>Parecer técnico com CNAI para venda, inventário, partilha e processos.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="vender">
+  <div class="container">
+    <div class="sell">
+      <div>
+        <div class="kicker">Quer vender?</div>
+        <h2>Quer vender ou alugar seu imóvel?</h2>
+        <p style="color:var(--texto-2);margin-top:6px">Cadastre seu imóvel e a gente cuida do resto: avaliação, fotos, divulgação e atendimento aos interessados.</p>
+        <ul>
+          <li>Avaliação com base no mercado de Contenda</li>
+          <li>Divulgação no site, portais e redes sociais</li>
+          <li>Filtro de compradores e acompanhamento de visitas</li>
+          <li>Negociação e documentação até a escritura</li>
+        </ul>
+        <a class="btn btn-mata" href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Quero%20vender%20ou%20alugar%20meu%20im%C3%B3vel%20com%20a%20Claudinea%20Im%C3%B3veis." target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Cadastrar meu imóvel</a>
+      </div>
+      <div class="sell-art" aria-hidden="true">
+        <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="400" fill="#2A2A2E"/>
+          <circle cx="300" cy="110" r="42" fill="#D9BE8C"/>
+          <path d="M0 250 C80 200 150 225 220 205 S340 170 400 195 V400 H0Z" fill="#3A3A40"/>
+          <path d="M0 300 C90 270 180 290 270 278 S370 265 400 275 V400 H0Z" fill="#4A4A52"/>
+          <g fill="none" stroke="#D9BE8C" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M110 268 150 238l40 30"/><path d="M120 261v34h60v-34"/></g>
+          <g stroke="#B08D57" stroke-width="4" stroke-linecap="round"><path d="M40 330h320M40 352h320M40 374h320"/></g>
+          <g fill="#5A5A62"><circle cx="262" cy="232" r="16"/><circle cx="286" cy="240" r="12"/></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contato" style="padding-top:20px">
+  <div class="container about">
+    <div>
+      <div class="kicker">Sobre nós</div>
+      <h2>Claudinea Imóveis</h2>
+      <div class="creci">CRECI-PR 13.755 · CNAI 46.500</div>
+      <p>Corretora de imóveis em Contenda e Região Metropolitana, com foco em transparência, responsabilidade e segurança jurídica em cada negociação: venda, locação, administração, avaliação e regularização de imóveis.</p><p>Atendimento direto com a corretora Claudinea Coelho Przybylovicz, avaliadora com CNAI, que emite Parecer Técnico de Avaliação Mercadológica (PTAM).</p>
+      <div class="kicker" style="margin-top:22px">Bairros</div>
+      <div class="chips"><span>Centro</span><span>Itaperubá</span><span>Mato Branco</span><span>Jardim São João</span><span>Serrinha</span><span>Área rural</span></div>
+      <ul class="contato">
+        <li><svg><use href="#pin"/></svg><span>Rua Timóteo Cordeiro, 301 · Centro, Contenda · PR</span></li><li><svg><use href="#pin"/></svg><span>Seg. a sex. 8h–18h · Sáb. 9h–12h</span></li>
+        <li><svg><use href="#phone"/></svg><span>(41) 99232-9582</span></li>
+        <li><svg><use href="#mail"/></svg><span>@claudineaimoveis no Instagram</span></li>
+      </ul>
+      <a class="btn btn-mata" href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Claudinea%20Im%C3%B3veis." target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Falar com a Claudinea</a>
+    </div>
+    <div class="mapa"><iframe title="Mapa do escritório" loading="lazy" src="https://www.google.com/maps?q=Claudinea+Im%C3%B3veis,+R.+Tim%C3%B3teo+Cordeiro,+301,+Contenda+PR&output=embed"></iframe></div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="container">
+    <div class="cta">
+      <h2>Procurando imóvel em Contenda?</h2>
+      <p>Conta pra gente o que você procura, quanto quer investir e em qual bairro. A gente te manda as melhores opções.</p>
+      <a class="btn btn-terra" href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Estou%20procurando%20um%20im%C3%B3vel%20em%20Contenda." target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Chamar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">Claudinea Imóveis · CRECI-PR 13.755 · CNAI 46.500 · (41) 99232-9582 · Rua Timóteo Cordeiro, 301 · Contenda, PR</div>
+</footer>
+
+<a class="whats-float" href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Claudinea%20Im%C3%B3veis." target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#wa"/></svg></a>
+
+<script>
+  const t=document.getElementById('tipo'),c=document.getElementById('cidade'),v=document.getElementById('valor'),bt=document.getElementById('buscar');
+  function upd(){
+    const msg=`Olá! Vim pelo site. Procuro ${t.value.toLowerCase()} no bairro ${c.value}, ${v.value.toLowerCase()}.`;
+    bt.href='https://wa.me/5541992329582?text='+encodeURIComponent(msg);
+  }
+  [t,c,v].forEach(e=>e.addEventListener('change',upd));upd();
+  document.querySelectorAll('.filtros button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.filtros button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    const f=b.dataset.f;
+    document.querySelectorAll('.card').forEach(k=>k.classList.toggle('hide',f!=='todos'&&k.dataset.tipo!==f));
+  }));
+</script>
+</body>
+</html>
