@@ -87,6 +87,13 @@
   .card .row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;gap:10px}
   .price{font-family:'Outfit';font-weight:500;font-size:1.2rem;color:var(--mata)}
   .card .row a{font-size:.84rem;font-weight:600;color:var(--terra-esc);white-space:nowrap}
+  .card .row .ver{font-size:.84rem;font-weight:600;color:var(--terra-esc);white-space:nowrap}
+  a.card{cursor:pointer}
+  .fin{position:absolute;bottom:12px;left:12px;z-index:1;font-size:.72rem;font-weight:600;padding:5px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+  .fin::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+  .fin.sim{background:#E3F4E8;color:#1E7A3C}
+  .fin.nao{background:rgba(255,255,255,.92);color:#8A5A1E}
+  .feats{flex-wrap:wrap;row-gap:4px}
   .mais{text-align:center;margin-top:36px}
 
   /* serviços */
@@ -200,8 +207,9 @@
       <button data-f="casa">Casas</button>
       <button data-f="terreno">Terrenos e áreas</button>
       <button data-f="locacao">Locação</button>
+      <button data-f="financia">Aceita financiamento</button>
     </div>
-    <div class="cards">
+    <div class="cards" id="cards">
       <article class="card" data-tipo="casa">
         <div class="img"><svg><use href="#home"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202603311711439141.jpg" alt="Casa de esquina com 3 vagas em Itaperubá, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Casa</span><span class="cod">Cód. CA019</span></div>
         <div class="info">
@@ -349,7 +357,7 @@
 </section>
 
 <footer>
-  <div class="container">Claudinea Imóveis · CRECI-PR 13.755 · CNAI 46.500 · (41) 99232-9582 · Rua Timóteo Cordeiro, 301 · Contenda, PR</div>
+  <div class="container">Claudinea Imóveis · CRECI-PR 13.755 · CNAI 46.500 · (41) 99232-9582 · Rua Timóteo Cordeiro, 301 · Contenda, PR · <a href="admin.html" style="text-decoration:underline">Área do corretor</a></div>
 </footer>
 
 <a class="whats-float" href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Claudinea%20Im%C3%B3veis." target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#wa"/></svg></a>
@@ -361,11 +369,43 @@
     bt.href='https://wa.me/5541992329582?text='+encodeURIComponent(msg);
   }
   [t,c,v].forEach(e=>e.addEventListener('change',upd));upd();
+  function filtrar(f){
+    document.querySelectorAll('.card').forEach(k=>{
+      const ok=f==='todos'||(f==='financia'?k.dataset.fin==='1':k.dataset.tipo===f);
+      k.classList.toggle('hide',!ok);
+    });
+  }
   document.querySelectorAll('.filtros button').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.filtros button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-    const f=b.dataset.f;
-    document.querySelectorAll('.card').forEach(k=>k.classList.toggle('hide',f!=='todos'&&k.dataset.tipo!==f));
+    filtrar(b.dataset.f);
   }));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script>
+  // Carrega os anúncios do Supabase. Se falhar, ficam os cards fixos do HTML.
+  (async()=>{
+    const {data,error}=await sb.from('imoveis').select('*').eq('publicado',true)
+      .order('destaque',{ascending:false}).order('ordem').order('created_at',{ascending:false});
+    if(error||!data||!data.length) return;
+    const e=IMV.esc;
+    document.getElementById('cards').innerHTML=data.map(i=>{
+      const grupo=i.finalidade==='locacao'?'locacao':(['terreno','area_rural'].includes(i.tipo)?'terreno':'casa');
+      const icone=grupo==='terreno'?'#terreno':'#home';
+      const badge=i.finalidade==='locacao'?'Locação':IMV.tipos[i.tipo]||'Imóvel';
+      const foto=i.fotos&&i.fotos[0]?`<img src="${e(i.fotos[0])}" alt="${e(i.titulo)}" loading="lazy" onerror="this.remove()">`:'';
+      const fin=i.finalidade==='locacao'?'':(i.financia?'<span class="fin sim">Aceita financiamento</span>':'<span class="fin nao">Não financia</span>');
+      return `<a class="card" href="imovel.html?cod=${encodeURIComponent(i.codigo)}" data-tipo="${grupo}" data-fin="${i.financia?1:0}">
+        <div class="img"><svg><use href="${icone}"/></svg>${foto}<span class="badge">${e(badge)}</span><span class="cod">Cód. ${e(i.codigo)}</span>${fin}</div>
+        <div class="info">
+          <h3>${e(i.titulo)}</h3>
+          <div class="loc">${e([i.bairro,i.cidade].filter(Boolean).join(' · '))}, PR</div>
+          <div class="feats">${IMV.feats(i).slice(0,3).map(f=>`<span>${e(f)}</span>`).join('')||'<span>&nbsp;</span>'}</div>
+          <div class="row"><span class="price">${e(IMV.preco(i))}</span><span class="ver">Ver anúncio →</span></div>
+        </div></a>`;
+    }).join('');
+    const on=document.querySelector('.filtros button.on');filtrar(on?on.dataset.f:'todos');
+  })();
 </script>
 </body>
 </html>

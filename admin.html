@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Painel | Claudinea Imóveis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--mata:#2A2A2E;--mata-2:#3A3A40;--terra:#B08D57;--terra-esc:#8E6F3E;--creme:#F6F4F0;--creme-2:#ECE6DC;--texto:#1F2A24;--texto-2:#5F6A63;--borda:rgba(30,59,44,.14);--ok:#1E7A3C;--ok-bg:#E3F4E8;--warn:#8A5A1E;--warn-bg:#FBEFDF;--erro:#B3261E}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:var(--creme);color:var(--texto);font-size:.94rem;line-height:1.5}
+  a{color:inherit}
+  h1,h2,h3{font-family:'Outfit',sans-serif;font-weight:500;color:var(--mata);letter-spacing:-.3px}
+  button,input,select,textarea{font:inherit;color:inherit}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:10px;font-weight:600;font-size:.88rem;border:1px solid transparent;cursor:pointer;background:var(--mata);color:#fff;text-decoration:none;white-space:nowrap}
+  .btn:hover{background:var(--mata-2)}
+  .btn.sec{background:#fff;color:var(--mata);border-color:var(--borda)}
+  .btn.sec:hover{background:var(--creme-2)}
+  .btn.perigo{background:#fff;color:var(--erro);border-color:#F0C9C6}
+  .btn:disabled{opacity:.5;cursor:default}
+  .btn.sm{padding:6px 12px;font-size:.8rem;border-radius:8px}
+
+  /* login */
+  .login{min-height:100vh;display:grid;place-items:center;padding:16px}
+  .login form{background:#fff;border:1px solid var(--borda);border-radius:20px;padding:36px;width:min(380px,100%)}
+  .login h1{font-size:1.6rem;margin-bottom:4px}
+  .login p{color:var(--texto-2);margin-bottom:24px;font-size:.88rem}
+  .login .btn{width:100%;margin-top:8px;padding:13px}
+
+  /* layout */
+  header{background:#fff;border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:20}
+  .bar{max-width:1240px;margin:0 auto;padding:0 16px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .bar b{font-family:'Outfit';font-weight:500;font-size:1.3rem}
+  .bar span{color:var(--texto-2);font-size:.82rem}
+  .bar .acoes{display:flex;gap:8px;align-items:center}
+  main{max-width:1240px;margin:0 auto;padding:28px 16px 80px}
+  .topo{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .topo h1{font-size:1.7rem}
+  .topo p{color:var(--texto-2)}
+  .ferr{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .ferr input,.ferr select{background:#fff;border:1px solid var(--borda);border-radius:10px;padding:9px 12px}
+  .ferr input{flex:1;min-width:200px}
+
+  .lista{background:#fff;border:1px solid var(--borda);border-radius:16px;overflow:hidden}
+  .item{display:grid;grid-template-columns:96px 1fr auto;gap:16px;align-items:center;padding:12px 16px;border-top:1px solid var(--creme-2)}
+  .item:first-child{border-top:none}
+  .item .th{width:96px;height:68px;border-radius:10px;background:var(--creme-2) center/cover no-repeat}
+  .item h3{font-size:1.02rem;margin-bottom:2px}
+  .item .meta{color:var(--texto-2);font-size:.82rem;display:flex;gap:6px 12px;flex-wrap:wrap}
+  .item .pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .pill{font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--creme-2);color:var(--texto-2)}
+  .pill.ok{background:var(--ok-bg);color:var(--ok)}
+  .pill.warn{background:var(--warn-bg);color:var(--warn)}
+  .pill.esc{background:var(--mata);color:#fff}
+  .item .bts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .vazio{padding:60px 20px;text-align:center;color:var(--texto-2)}
+
+  /* formulário */
+  .drawer{position:fixed;inset:0;z-index:40;display:none}
+  .drawer.on{display:block}
+  .drawer .fundo{position:absolute;inset:0;background:rgba(20,20,24,.45)}
+  .drawer .painel{position:absolute;top:0;right:0;bottom:0;width:min(760px,100%);background:var(--creme);overflow-y:auto;box-shadow:-20px 0 60px -30px rgba(0,0,0,.5)}
+  .drawer .cab{position:sticky;top:0;z-index:2;background:#fff;border-bottom:1px solid var(--borda);padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .drawer .cab h2{font-size:1.25rem}
+  .drawer form{padding:22px}
+  fieldset{border:none;background:#fff;border:1px solid var(--borda);border-radius:16px;padding:18px;margin-bottom:16px}
+  legend{font-family:'Outfit';font-weight:500;font-size:1.02rem;color:var(--mata);padding:0 6px;margin-left:-6px}
+  .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .g .w2{grid-column:span 2}
+  .g .w-all{grid-column:1/-1}
+  label{display:block;font-size:.74rem;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--texto-2);margin-bottom:5px}
+  input[type=text],input[type=number],select,textarea,input[type=email],input[type=password]{width:100%;background:#fff;border:1px solid var(--borda);border-radius:10px;padding:10px 12px}
+  textarea{min-height:120px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--terra);outline-offset:-1px;border-color:transparent}
+  .chk{display:flex;flex-wrap:wrap;gap:10px}
+  .chk label{display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:.9rem;font-weight:500;color:var(--texto);background:var(--creme);border:1px solid var(--borda);border-radius:10px;padding:10px 14px;cursor:pointer;margin:0}
+  .chk input{width:17px;height:17px;accent-color:var(--mata)}
+  .chk label.destaque-fin{border-color:var(--terra);background:#FFF8EC}
+  .ajuda{font-size:.8rem;color:var(--texto-2);margin-top:6px}
+
+  .fotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:12px}
+  .foto{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:var(--creme-2) center/cover no-repeat;border:2px solid transparent}
+  .foto:first-child{border-color:var(--terra)}
+  .foto:first-child::after{content:"Capa";position:absolute;left:6px;top:6px;background:var(--terra);color:#fff;font-size:.66rem;font-weight:700;padding:2px 7px;border-radius:6px}
+  .foto .ctl{position:absolute;right:4px;bottom:4px;display:flex;gap:4px}
+  .foto .ctl button{width:28px;height:28px;border-radius:8px;border:none;background:rgba(255,255,255,.92);cursor:pointer;font-size:.85rem}
+  .soltar{border:2px dashed var(--borda);border-radius:12px;padding:22px;text-align:center;color:var(--texto-2);cursor:pointer;background:var(--creme)}
+  .soltar.sobre{border-color:var(--terra);background:#FFF8EC}
+  .soltar b{color:var(--mata)}
+  .rodape{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--borda);padding:12px 22px;display:flex;justify-content:space-between;gap:10px;margin:0 -22px -22px}
+
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--mata);color:#fff;padding:12px 18px;border-radius:12px;z-index:60;font-size:.88rem;display:none;max-width:calc(100% - 32px)}
+  .toast.on{display:block}
+  .toast.erro{background:var(--erro)}
+  .msg-erro{color:var(--erro);font-size:.85rem;margin-top:10px;min-height:1.2em}
+  [hidden]{display:none!important}
+
+  @media (max-width:640px){
+    .item{grid-template-columns:72px 1fr}
+    .item .th{width:72px;height:54px}
+    .item .bts{grid-column:1/-1;justify-content:flex-start}
+    .g .w2{grid-column:1/-1}
+    .bar span{display:none}
+  }
+</style>
+</head>
+<body>
+
+<section class="login" id="tela-login" hidden>
+  <form id="f-login">
+    <h1>Painel Claudinea</h1>
+    <p>Entre para cadastrar e editar os anúncios do site.</p>
+    <div style="margin-bottom:12px"><label for="email">E-mail</label><input type="email" id="email" required autocomplete="username"></div>
+    <div><label for="senha">Senha</label><input type="password" id="senha" required autocomplete="current-password"></div>
+    <button class="btn" type="submit">Entrar</button>
+    <div class="msg-erro" id="login-erro"></div>
+  </form>
+</section>
+
+<div id="tela-app" hidden>
+  <header>
+    <div class="bar">
+      <div><b>Claudinea</b> <span>Painel de anúncios</span></div>
+      <div class="acoes">
+        <a class="btn sec sm" href="index.html" target="_blank">Ver site</a>
+        <button class="btn sec sm" id="sair">Sair</button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="topo">
+      <div><h1>Imóveis</h1><p id="resumo">Carregando…</p></div>
+      <button class="btn" id="novo">+ Novo anúncio</button>
+    </div>
+    <div class="ferr">
+      <input type="search" id="busca" placeholder="Buscar por título, código ou bairro">
+      <select id="f-fin"><option value="">Todas finalidades</option><option value="venda">Venda</option><option value="locacao">Locação</option></select>
+      <select id="f-status"><option value="">Todos status</option><option value="pub">Publicados</option><option value="rasc">Ocultos</option><option value="dest">Em destaque</option></select>
+    </div>
+    <div class="lista" id="lista"></div>
+  </main>
+</div>
+
+<div class="drawer" id="drawer">
+  <div class="fundo" data-fechar></div>
+  <div class="painel">
+    <div class="cab"><h2 id="f-titulo">Novo anúncio</h2><button class="btn sec sm" type="button" data-fechar>Fechar</button></div>
+    <form id="f">
+      <fieldset>
+        <legend>Anúncio</legend>
+        <div class="g">
+          <div><label for="codigo">Código</label><input type="text" id="codigo" required placeholder="CA021"></div>
+          <div class="w2"><label for="titulo">Título</label><input type="text" id="titulo" required placeholder="Casa com 3 quartos e quintal"></div>
+          <div><label for="finalidade">Finalidade</label><select id="finalidade"><option value="venda">Venda</option><option value="locacao">Locação</option></select></div>
+          <div><label for="tipo">Tipo</label><select id="tipo"></select></div>
+          <div><label for="preco" id="lbl-preco">Preço (R$)</label><input type="number" id="preco" min="0" step="0.01" placeholder="320000"></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Condições</legend>
+        <div class="chk">
+          <label class="destaque-fin"><input type="checkbox" id="financia"> Aceita financiamento</label>
+          <label><input type="checkbox" id="aceita_fgts"> Aceita FGTS</label>
+          <label><input type="checkbox" id="aceita_permuta"> Aceita permuta</label>
+        </div>
+        <div class="ajuda">Aparece no card do site como “Aceita financiamento” ou “Não financia” (só em anúncios de venda).</div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Localização e medidas</legend>
+        <div class="g">
+          <div><label for="bairro">Bairro</label><input type="text" id="bairro" list="bairros" placeholder="Centro"></div>
+          <div><label for="cidade">Cidade</label><input type="text" id="cidade" value="Contenda"></div>
+          <div><label for="area_m2">Área total (m²)</label><input type="number" id="area_m2" min="0" step="0.01"></div>
+          <div><label for="area_construida_m2">Construída (m²)</label><input type="number" id="area_construida_m2" min="0" step="0.01"></div>
+          <div><label for="quartos">Quartos</label><input type="number" id="quartos" min="0"></div>
+          <div><label for="suites">Suítes</label><input type="number" id="suites" min="0"></div>
+          <div><label for="banheiros">Banheiros</label><input type="number" id="banheiros" min="0"></div>
+          <div><label for="vagas">Vagas</label><input type="number" id="vagas" min="0"></div>
+        </div>
+        <datalist id="bairros"><option>Centro</option><option>Itaperubá</option><option>Mato Branco</option><option>Jardim São João</option><option>Serrinha</option></datalist>
+      </fieldset>
+
+      <fieldset>
+        <legend>Fotos</legend>
+        <div class="fotos" id="fotos"></div>
+        <div class="soltar" id="soltar"><b>Clique ou arraste fotos aqui</b><br><small>A primeira foto é a capa. Use as setas para reordenar.</small></div>
+        <input type="file" id="arquivo" accept="image/*" multiple hidden>
+      </fieldset>
+
+      <fieldset>
+        <legend>Descrição</legend>
+        <div class="g">
+          <div class="w-all"><label for="descricao">Texto do anúncio</label><textarea id="descricao" placeholder="Conte os detalhes do imóvel, documentação, proximidades…"></textarea></div>
+          <div class="w-all"><label for="caracteristicas">Características (uma por linha)</label><textarea id="caracteristicas" style="min-height:90px" placeholder="Churrasqueira&#10;Quintal amplo&#10;Escriturado"></textarea></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Publicação</legend>
+        <div class="chk">
+          <label><input type="checkbox" id="publicado" checked> Publicado no site</label>
+          <label><input type="checkbox" id="destaque"> Destaque (aparece primeiro)</label>
+        </div>
+        <div class="g" style="margin-top:12px"><div><label for="ordem">Ordem</label><input type="number" id="ordem" value="0"></div></div>
+      </fieldset>
+
+      <div class="rodape">
+        <button class="btn perigo" type="button" id="apagar" hidden>Excluir anúncio</button>
+        <span></span>
+        <div style="display:flex;gap:8px"><a class="btn sec" id="ver" target="_blank" hidden>Ver anúncio</a><button class="btn" type="submit" id="salvar">Salvar</button></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script>
+const $=s=>document.querySelector(s), e=IMV.esc;
+let todos=[], atual=null, fotos=[];
+
+function toast(t,erro){const el=$('#toast');el.textContent=t;el.className='toast on'+(erro?' erro':'');clearTimeout(el._t);el._t=setTimeout(()=>el.className='toast',3500)}
+
+// ---------- autenticação ----------
+async function iniciar(){
+  let session=null;
+  try{({data:{session}}=await Promise.race([sb.auth.getSession(),new Promise((_,r)=>setTimeout(r,4000))]))}catch(_){}
+  $('#tela-login').hidden=!!session;$('#tela-app').hidden=!session;
+  if(session) carregar();
+}
+$('#f-login').onsubmit=async ev=>{
+  ev.preventDefault();$('#login-erro').textContent='';
+  const {error}=await sb.auth.signInWithPassword({email:$('#email').value.trim(),password:$('#senha').value});
+  if(error){$('#login-erro').textContent='E-mail ou senha incorretos.';return}
+  iniciar();
+};
+$('#sair').onclick=async()=>{await sb.auth.signOut();iniciar()};
+
+// ---------- lista ----------
+async function carregar(){
+  const {data,error}=await sb.from('imoveis').select('*').order('destaque',{ascending:false}).order('ordem').order('created_at',{ascending:false});
+  if(error){
+    $('#lista').innerHTML=`<div class="vazio">Não consegui ler a tabela <b>imoveis</b>.<br>Rode o arquivo <code>supabase/schema.sql</code> no SQL Editor do Supabase.<br><small>${e(error.message)}</small></div>`;
+    $('#resumo').textContent='';return;
+  }
+  todos=data;desenhar();
+}
+function desenhar(){
+  const q=$('#busca').value.trim().toLowerCase(), fin=$('#f-fin').value, st=$('#f-status').value;
+  const lst=todos.filter(i=>{
+    if(q&&!`${i.titulo} ${i.codigo} ${i.bairro||''}`.toLowerCase().includes(q))return false;
+    if(fin&&i.finalidade!==fin)return false;
+    if(st==='pub'&&!i.publicado)return false;
+    if(st==='rasc'&&i.publicado)return false;
+    if(st==='dest'&&!i.destaque)return false;
+    return true;
+  });
+  const pub=todos.filter(i=>i.publicado).length;
+  $('#resumo').textContent=`${todos.length} anúncio${todos.length===1?'':'s'} · ${pub} publicado${pub===1?'':'s'}`;
+  $('#lista').innerHTML=lst.length?lst.map(i=>`
+    <div class="item">
+      <div class="th" style="background-image:url('${e(i.fotos&&i.fotos[0]||'')}')"></div>
+      <div>
+        <h3>${e(i.titulo)}</h3>
+        <div class="meta"><span>Cód. ${e(i.codigo)}</span><span>${e(IMV.tipos[i.tipo]||i.tipo)}</span><span>${e(i.bairro||'')}</span><b>${e(IMV.preco(i))}</b></div>
+        <div class="pills">
+          <span class="pill esc">${i.finalidade==='locacao'?'Locação':'Venda'}</span>
+          ${i.finalidade==='venda'?(i.financia?'<span class="pill ok">Financia</span>':'<span class="pill warn">Não financia</span>'):''}
+          ${i.publicado?'<span class="pill ok">Publicado</span>':'<span class="pill">Oculto</span>'}
+          ${i.destaque?'<span class="pill">★ Destaque</span>':''}
+        </div>
+      </div>
+      <div class="bts">
+        <button class="btn sec sm" data-pub="${i.id}">${i.publicado?'Ocultar':'Publicar'}</button>
+        <a class="btn sec sm" href="imovel.html?cod=${encodeURIComponent(i.codigo)}" target="_blank">Ver</a>
+        <button class="btn sm" data-edit="${i.id}">Editar</button>
+      </div>
+    </div>`).join(''):`<div class="vazio">${todos.length?'Nenhum anúncio com esse filtro.':'Nenhum anúncio ainda. Clique em “+ Novo anúncio”.'}</div>`;
+}
+['#busca','#f-fin','#f-status'].forEach(s=>$(s).addEventListener('input',desenhar));
+$('#lista').onclick=async ev=>{
+  const ed=ev.target.closest('[data-edit]'), pb=ev.target.closest('[data-pub]');
+  if(ed) abrir(todos.find(i=>i.id===ed.dataset.edit));
+  if(pb){
+    const i=todos.find(x=>x.id===pb.dataset.pub);
+    const {error}=await sb.from('imoveis').update({publicado:!i.publicado}).eq('id',i.id);
+    if(error)return toast('Erro: '+error.message,true);
+    i.publicado=!i.publicado;desenhar();toast(i.publicado?'Anúncio publicado':'Anúncio ocultado do site');
+  }
+};
+
+// ---------- formulário ----------
+$('#tipo').innerHTML=Object.entries(IMV.tipos).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+const campos=['codigo','titulo','finalidade','tipo','preco','bairro','cidade','area_m2','area_construida_m2','quartos','suites','banheiros','vagas','descricao','ordem'];
+const marcas=['financia','aceita_fgts','aceita_permuta','publicado','destaque'];
+const numeros=['preco','area_m2','area_construida_m2','quartos','suites','banheiros','vagas','ordem'];
+
+function proximoCodigo(){
+  const n=todos.map(i=>parseInt(String(i.codigo).replace(/\D/g,''),10)).filter(Boolean);
+  return 'CA'+String((n.length?Math.max(...n):0)+1).padStart(3,'0');
+}
+function abrir(i){
+  atual=i||null;
+  const d=i||{codigo:proximoCodigo(),cidade:'Contenda',finalidade:'venda',tipo:'casa',publicado:true,ordem:0};
+  campos.forEach(c=>$('#'+c).value=d[c]??'');
+  marcas.forEach(c=>$('#'+c).checked=!!d[c]);
+  $('#caracteristicas').value=(d.caracteristicas||[]).join('\n');
+  fotos=[...(d.fotos||[])];desenharFotos();
+  $('#f-titulo').textContent=i?'Editar anúncio':'Novo anúncio';
+  $('#apagar').hidden=!i;
+  $('#ver').hidden=!i;if(i)$('#ver').href='imovel.html?cod='+encodeURIComponent(i.codigo);
+  atualizaPreco();
+  $('#drawer').classList.add('on');document.body.style.overflow='hidden';
+}
+function fechar(){$('#drawer').classList.remove('on');document.body.style.overflow=''}
+document.querySelectorAll('[data-fechar]').forEach(b=>b.onclick=fechar);
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape')fechar()});
+$('#novo').onclick=()=>abrir();
+function atualizaPreco(){$('#lbl-preco').textContent=$('#finalidade').value==='locacao'?'Aluguel (R$/mês)':'Preço (R$)'}
+$('#finalidade').onchange=atualizaPreco;
+
+$('#f').onsubmit=async ev=>{
+  ev.preventDefault();
+  const reg={};
+  campos.forEach(c=>{const v=$('#'+c).value.trim();reg[c]=numeros.includes(c)?(v===''?null:Number(v)):(v||null)});
+  if(reg.ordem==null)reg.ordem=0;
+  if(!reg.cidade)reg.cidade='Contenda';
+  marcas.forEach(c=>reg[c]=$('#'+c).checked);
+  reg.caracteristicas=$('#caracteristicas').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  reg.fotos=fotos;
+  $('#salvar').disabled=true;
+  const r=atual?await sb.from('imoveis').update(reg).eq('id',atual.id).select().single():await sb.from('imoveis').insert(reg).select().single();
+  $('#salvar').disabled=false;
+  if(r.error)return toast(r.error.code==='23505'?'Já existe um anúncio com esse código.':'Erro ao salvar: '+r.error.message,true);
+  toast('Anúncio salvo!');fechar();carregar();
+};
+$('#apagar').onclick=async()=>{
+  if(!atual||!confirm(`Excluir o anúncio "${atual.titulo}"? Isso não pode ser desfeito.`))return;
+  const {error}=await sb.from('imoveis').delete().eq('id',atual.id);
+  if(error)return toast('Erro: '+error.message,true);
+  const nossas=(atual.fotos||[]).map(caminho).filter(Boolean);
+  if(nossas.length) await sb.storage.from('imoveis').remove(nossas);
+  toast('Anúncio excluído');fechar();carregar();
+};
+
+// ---------- fotos ----------
+const BASE=SUPABASE_URL+'/storage/v1/object/public/imoveis/';
+const caminho=u=>u.startsWith(BASE)?decodeURIComponent(u.slice(BASE.length)):null;
+function desenharFotos(){
+  $('#fotos').innerHTML=fotos.map((u,k)=>`<div class="foto" style="background-image:url('${e(u)}')"><div class="ctl">
+    ${k?`<button type="button" data-mv="${k}" data-d="-1" title="Mover para trás">←</button>`:''}
+    ${k<fotos.length-1?`<button type="button" data-mv="${k}" data-d="1" title="Mover para frente">→</button>`:''}
+    <button type="button" data-rm="${k}" title="Remover">✕</button></div></div>`).join('');
+}
+$('#fotos').onclick=ev=>{
+  const mv=ev.target.closest('[data-mv]'), rm=ev.target.closest('[data-rm]');
+  if(mv){const k=+mv.dataset.mv,j=k+(+mv.dataset.d);[fotos[k],fotos[j]]=[fotos[j],fotos[k]];desenharFotos()}
+  if(rm){fotos.splice(+rm.dataset.rm,1);desenharFotos()}
+};
+const zona=$('#soltar'), arq=$('#arquivo');
+zona.onclick=()=>arq.click();
+zona.ondragover=ev=>{ev.preventDefault();zona.classList.add('sobre')};
+zona.ondragleave=()=>zona.classList.remove('sobre');
+zona.ondrop=ev=>{ev.preventDefault();zona.classList.remove('sobre');enviar(ev.dataTransfer.files)};
+arq.onchange=()=>{enviar(arq.files);arq.value=''};
+
+// reduz a foto para no máx. 1920px antes de subir (economiza espaço e deixa o site rápido)
+function reduzir(file){
+  return new Promise(res=>{
+    const img=new Image();img.onload=()=>{
+      const max=1920,s=Math.min(1,max/Math.max(img.width,img.height));
+      const c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      c.toBlob(b=>res(b||file),'image/jpeg',.85);URL.revokeObjectURL(img.src);
+    };img.onerror=()=>res(file);img.src=URL.createObjectURL(file);
+  });
+}
+async function enviar(lista){
+  const imgs=[...lista].filter(f=>f.type.startsWith('image/'));
+  if(!imgs.length)return;
+  const pasta=($('#codigo').value.trim()||'sem-codigo').replace(/[^\w-]/g,'');
+  let ok=0;
+  for(const [n,f] of imgs.entries()){
+    zona.innerHTML=`<b>Enviando ${n+1} de ${imgs.length}…</b>`;
+    const blob=await reduzir(f);
+    const nome=`${pasta}/${Date.now()}-${Math.random().toString(36).slice(2,7)}.jpg`;
+    const {error}=await sb.storage.from('imoveis').upload(nome,blob,{contentType:'image/jpeg',upsert:false});
+    if(error){toast('Erro ao enviar foto: '+error.message,true);continue}
+    fotos.push(BASE+nome);ok++;desenharFotos();
+  }
+  zona.innerHTML='<b>Clique ou arraste fotos aqui</b><br><small>A primeira foto é a capa. Use as setas para reordenar.</small>';
+  if(ok)toast(`${ok} foto${ok>1?'s':''} enviada${ok>1?'s':''}. Lembre de salvar.`);
+}
+
+iniciar();
+</script>
+</body>
+</html>
