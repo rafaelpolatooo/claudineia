@@ -47,25 +47,18 @@
   .btn-sm{padding:10px 18px;font-size:.84rem}
 
   /* hero */
-  .hero{position:relative;overflow:hidden;background:var(--mata);color:#fff;padding:80px 0 120px}
-  .hero .hills{position:absolute;inset:auto 0 0 0;width:100%;height:260px;pointer-events:none}
-  .hero-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
-  .tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:7px 14px;border-radius:999px;font-size:.8rem;color:rgba(255,255,255,.85);margin-bottom:22px}
-  .tag i{width:7px;height:7px;border-radius:50%;background:var(--trigo);display:inline-block}
-  h1{font-size:clamp(2.4rem,5vw,3.9rem);line-height:1.06;margin-bottom:20px}
-  h1 span{color:var(--trigo)}
-  .lead{font-size:1.08rem;color:rgba(255,255,255,.78);max-width:520px;margin-bottom:32px}
+  .hero{background:var(--creme);padding:36px 0 8px}
+  .hero-top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:22px}
+  h1{font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1.1;color:var(--mata);margin-bottom:6px}
+  h1 span{color:var(--terra-esc)}
+  .lead{font-size:.98rem;color:var(--texto-2);max-width:560px}
+  .trust{display:flex;gap:18px;flex-wrap:wrap;font-size:.84rem;color:var(--texto-2)}
+  .trust b{font-family:'Outfit';font-weight:500;color:var(--mata);font-size:1rem;margin-right:4px}
 
-  .search{background:#fff;color:var(--texto);border-radius:18px;padding:18px;box-shadow:0 30px 60px -30px rgba(0,0,0,.55);display:grid;grid-template-columns:1.25fr 1fr 1fr auto;gap:10px;align-items:end;max-width:700px}
+  .search{background:#fff;color:var(--texto);border-radius:16px;padding:14px;border:1px solid rgba(30,59,44,.08);box-shadow:0 18px 40px -30px rgba(0,0,0,.35);display:grid;grid-template-columns:1.25fr 1fr 1fr auto;gap:10px;align-items:end}
   .search label{display:block;font-size:.7rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--texto-2);margin:0 0 6px 2px}
   .search select{appearance:none;border:1px solid rgba(30,59,44,.15);border-radius:10px;padding:12px 34px 12px 14px;font-family:'Inter';font-size:.9rem;color:var(--texto);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235F6A63' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") no-repeat right 12px center;width:100%}
   .search .btn{padding:13px 22px}
-  .hint{font-size:.82rem;color:rgba(255,255,255,.65);margin-top:14px}
-
-  .hero-side{display:grid;gap:14px}
-  .stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:22px 24px;display:flex;align-items:center;gap:18px}
-  .stat .n{font-family:'Outfit';font-size:2.2rem;font-weight:500;color:var(--trigo);line-height:1;min-width:86px}
-  .stat p{font-size:.92rem;color:rgba(255,255,255,.78);line-height:1.45}
 
   section{padding:96px 0}
   .head{max-width:640px;margin-bottom:40px}
@@ -140,23 +133,18 @@
   @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}50%{box-shadow:0 0 0 14px rgba(37,211,102,0)}}
 
   @media (max-width:980px){
-    .hero-grid,.sell,.about{grid-template-columns:1fr}
+    .sell,.about{grid-template-columns:1fr}
     .cards{grid-template-columns:1fr 1fr}
     .serv{grid-template-columns:1fr 1fr}
     .nav ul{display:none}
     .sell{padding:40px 28px}
-    .hero-side{grid-template-columns:repeat(3,1fr)}
-    .stat{flex-direction:column;align-items:flex-start;gap:8px}
-    .stat .n{min-width:0}
   }
   @media (max-width:620px){
     .search{grid-template-columns:1fr 1fr}
     .search .f-full,.search .btn{grid-column:1/-1}
-    .cards,.serv,.hero-side{grid-template-columns:1fr}
-    .stat{flex-direction:row;align-items:center}
-    .stat .n{min-width:78px;font-size:1.9rem}
+    .cards,.serv{grid-template-columns:1fr}
     section{padding:70px 0}
-    .hero{padding:48px 0 110px}
+    .hero{padding:24px 0 4px}
     .brand small{display:none}
     .cta{padding:44px 22px}
     .sell{padding:32px 22px}
@@ -188,41 +176,25 @@
 </header>
 
 <section class="hero">
-  <svg class="hills" viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 170 C180 120 320 150 480 130 S800 70 980 110 S1290 160 1440 120 V260 H0Z" fill="#3A3A40"/>
-    <path d="M0 210 C220 170 420 200 620 185 S980 150 1180 180 S1360 200 1440 190 V260 H0Z" fill="#4A4A52"/>
-    <path d="M0 240 C260 225 520 245 760 235 S1180 222 1440 238 V260 H0Z" fill="#F6F4F0"/>
-  </svg>
-  <div class="container hero-grid">
-    <div>
-      <div class="tag"><i></i> Corretora de imóveis em Contenda · CRECI 13.755</div>
-      <h1>O imóvel que você procura <span>está aqui</span></h1>
-      <p class="lead">Casas, terrenos, áreas rurais e salas comerciais em Contenda e região, com transparência, responsabilidade e segurança jurídica do primeiro contato até a escritura.</p>
-
+  <div class="container">
+    <div class="hero-top">
+      <div>
+        <h1>O imóvel que você procura <span>está aqui</span></h1>
+        <p class="lead">Casas, terrenos, áreas rurais e salas comerciais em Contenda e região.</p>
+      </div>
+      <div class="trust"><span><b>5,0★</b>no Google</span><span><b>18+</b>imóveis</span><span><b>CNAI</b>avaliação oficial</span></div>
+    </div>
       <div class="search">
         <div><label for="tipo">Tipo</label><select id="tipo"><option>Casa</option><option>Terreno</option><option>Área rural / chácara</option><option>Sala comercial (locação)</option></select></div>
         <div><label for="cidade">Bairro</label><select id="cidade"><option>Centro</option><option>Itaperubá</option><option>Mato Branco</option><option>Jardim São João</option><option>Serrinha</option><option>Outro bairro</option></select></div>
         <div class="f-full"><label for="valor">Até quanto?</label><select id="valor"><option>Até R$ 250 mil</option><option>R$ 250 a 500 mil</option><option>R$ 500 a 800 mil</option><option>Acima de R$ 800 mil</option></select></div>
         <a class="btn btn-terra" id="buscar" href="#" target="_blank" rel="noopener">Buscar</a>
       </div>
-      <div class="hint">Escolha o que procura e receba as opções direto no WhatsApp.</div>
-    </div>
-
-    <div class="hero-side">
-      <div class="stat"><span class="n">5,0★</span><p>nota dos clientes no Google</p></div>
-      <div class="stat"><span class="n">18+</span><p>imóveis entre venda e locação em Contenda</p></div>
-      <div class="stat"><span class="n" style="font-size:1.5rem">CNAI</span><p>avaliação oficial de imóveis (PTAM)</p></div>
-    </div>
   </div>
 </section>
 
-<section id="imoveis" style="padding-top:60px">
+<section id="imoveis" style="padding-top:28px">
   <div class="container">
-    <div class="head">
-      <div class="kicker">Imóveis em destaque</div>
-      <h2>Oportunidades disponíveis agora</h2>
-      <p>Uma seleção da carteira atual. Chame no WhatsApp para fotos, documentação e visita.</p>
-    </div>
     <div class="filtros">
       <button class="on" data-f="todos">Todos</button>
       <button data-f="casa">Casas</button>
