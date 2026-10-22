@@ -386,7 +386,7 @@
   // Carrega os anúncios do Supabase. Se falhar, ficam os cards fixos do HTML.
   (async()=>{
     const {data,error}=await sb.from('imoveis').select('*').eq('publicado',true)
-      .order('ordem').order('created_at',{ascending:false});
+      .order('finalidade',{ascending:false}).order('ordem').order('created_at',{ascending:false}); // vendas antes de locações
     if(error||!data||!data.length) return;
     const e=IMV.esc;
     document.getElementById('cards').innerHTML=data.map(i=>{

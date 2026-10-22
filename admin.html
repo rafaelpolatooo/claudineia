@@ -252,7 +252,7 @@ $('#sair').onclick=async()=>{await sb.auth.signOut();iniciar()};
 
 // ---------- lista ----------
 async function carregar(){
-  const {data,error}=await sb.from('imoveis').select('*').order('ordem').order('created_at',{ascending:false});
+  const {data,error}=await sb.from('imoveis').select('*').order('finalidade',{ascending:false}).order('ordem').order('created_at',{ascending:false}); // vendas antes de locações, igual ao site
   if(error){
     $('#lista').innerHTML=`<div class="vazio">Não consegui ler a tabela <b>imoveis</b>.<br>Rode o arquivo <code>supabase/schema.sql</code> no SQL Editor do Supabase.<br><small>${e(error.message)}</small></div>`;
     $('#resumo').textContent='';return;
