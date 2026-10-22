@@ -38,7 +38,7 @@ create trigger imoveis_updated_at before update on public.imoveis
 -- Quem pode usar o painel: só os e-mails desta tabela (estar logado não basta).
 create table if not exists public.admins (email text primary key);
 alter table public.admins enable row level security;
-insert into public.admins (email) values ('claudineia@admin.com') on conflict do nothing;
+insert into public.admins (email) values ('claudinea@admin.com') on conflict do nothing;
 
 create or replace function public.is_admin() returns boolean
 language sql stable security definer set search_path = public as $$
