@@ -399,7 +399,7 @@
         <div class="img"><svg><use href="${icone}"/></svg>${foto}<span class="badge">${e(badge)}</span><span class="cod">Cód. ${e(i.codigo)}</span>${fin}</div>
         <div class="info">
           <h3>${e(i.titulo)}</h3>
-          <div class="loc">${e([i.bairro,i.cidade].filter(Boolean).join(' · '))}, PR</div>
+          <div class="loc">${e([i.bairro,i.cidade].filter(Boolean).join(' · ')+(String(i.cidade||'').includes('/')?'':', PR'))}</div>
           <div class="feats">${IMV.feats(i).slice(0,3).map(f=>`<span>${e(f)}</span>`).join('')||'<span>&nbsp;</span>'}</div>
           <div class="row"><span class="price">${e(IMV.preco(i))}</span><span class="ver">Ver anúncio →</span></div>
         </div></a>`;

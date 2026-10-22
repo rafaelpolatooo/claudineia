@@ -128,7 +128,7 @@
   if(error||!i) return naoAchou();
 
   document.title=`${i.titulo} · ${i.bairro||i.cidade} | Claudinea Imóveis`;
-  const loc=[i.bairro,i.cidade].filter(Boolean).join(' · ')+', PR';
+  const loc=[i.bairro,i.cidade].filter(Boolean).join(' · ')+(String(i.cidade||'').includes('/')?'':', PR');
   const msg=`Olá! Vim pelo site e tenho interesse no imóvel cód. ${i.codigo} (${i.titulo}, ${i.bairro||i.cidade}).`;
   const wa=IMV.whats(msg);
   document.getElementById('wa-top').href=wa;document.getElementById('wa-float').href=wa;
