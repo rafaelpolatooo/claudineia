@@ -312,22 +312,28 @@ $('#lista').addEventListener('pointerdown',ev=>{
   if(!h||arrasto)return;
   ev.preventDefault();
   const el=h.closest('.item');
-  arrasto={el,h};
+  arrasto={el,id:ev.pointerId};
   el.classList.add('arrastando');$('#lista').classList.add('ordenando');
-  h.setPointerCapture(ev.pointerId);
-  h.onpointermove=moverArrasto;
-  h.onpointerup=h.onpointercancel=soltarArrasto;
+  // escuta na janela: mover o item no DOM derruba o pointer capture da alça
+  addEventListener('pointermove',moverArrasto);
+  addEventListener('pointerup',soltarArrasto);
+  addEventListener('pointercancel',soltarArrasto);
 });
 function moverArrasto(ev){
+  if(ev.pointerId!==arrasto.id)return;
+  ev.preventDefault();
   const lista=$('#lista'), y=ev.clientY;
   const prox=[...lista.querySelectorAll('.item:not(.arrastando)')].find(i=>{const r=i.getBoundingClientRect();return y<r.top+r.height/2});
   if(prox){if(arrasto.el.nextElementSibling!==prox)lista.insertBefore(arrasto.el,prox)}
   else if(lista.lastElementChild!==arrasto.el)lista.appendChild(arrasto.el);
   if(y<130)scrollBy(0,-14);else if(y>innerHeight-70)scrollBy(0,14);
 }
-async function soltarArrasto(){
-  const {el,h}=arrasto;arrasto=null;
-  h.onpointermove=h.onpointerup=h.onpointercancel=null;
+async function soltarArrasto(ev){
+  if(ev.pointerId!==arrasto.id)return;
+  const {el}=arrasto;arrasto=null;
+  removeEventListener('pointermove',moverArrasto);
+  removeEventListener('pointerup',soltarArrasto);
+  removeEventListener('pointercancel',soltarArrasto);
   el.classList.remove('arrastando');$('#lista').classList.remove('ordenando');
   const ids=[...$('#lista').querySelectorAll('.item')].map(d=>d.dataset.id);
   todos.sort((a,b)=>ids.indexOf(a.id)-ids.indexOf(b.id));
