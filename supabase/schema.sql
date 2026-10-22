@@ -87,10 +87,10 @@ create policy "fotos apaga admin" on storage.objects
 
 -- Imóveis que já estavam no site (fotos do imobibrasil). Pode editar/apagar depois pelo painel.
 insert into public.imoveis (codigo, titulo, tipo, finalidade, bairro, preco, area_construida_m2, quartos, banheiros, vagas, area_m2, financia, destaque, ordem, fotos) values
- ('CA019','Casa de esquina com 3 vagas','casa','venda','Itaperubá',320000,155,2,null,3,null,false,true,1,'{https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202603311711439141.jpg}'),
+ ('CA019','Casa de esquina com 3 vagas','casa','venda','Itaperubá',320000,155,2,null,3,null,true,true,1,'{https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202603311711439141.jpg}'),
  ('CA020','Casa em terreno de 1.215 m²','casa','venda','Mato Branco',270000,null,2,2,null,1215,false,true,2,'{https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202605052021242831.png}'),
- ('CA012','Casa em condomínio','casa','venda','Centro',280000,null,2,null,1,null,false,true,3,'{https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202503181413579579.jpg}'),
- ('CA004','Casa alto padrão mobiliada','casa','venda','Centro',2300000,288,4,null,null,null,false,true,4,'{https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202509091646071141.jpg}'),
+ ('CA012','Casa em condomínio','casa','venda','Centro',280000,null,2,null,1,null,true,true,3,'{https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202503181413579579.jpg}'),
+ ('CA004','Casa alto padrão mobiliada','casa','venda','Centro',2300000,288,4,null,null,null,true,true,4,'{https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202509091646071141.jpg}'),
  ('TE012','Terreno no Cond. Castel Sant''Angelo','terreno','venda','Centro',196000,null,null,null,null,252,false,true,5,'{https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202509111530433117.jpg}'),
  ('TE018','Área rural de 4,4 hectares','area_rural','venda','Campestre, Lagoão e Turvo',430000,null,null,null,null,44921,false,true,6,'{https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202604262256282725.png}'),
  ('SL015L','Sala comercial com mezanino','sala_comercial','locacao','Centro',1800,null,null,1,null,53,false,true,7,'{https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202512161519285094.jpg}')

@@ -45,8 +45,15 @@
   .ferr input{flex:1;min-width:200px}
 
   .lista{background:#fff;border:1px solid var(--borda);border-radius:16px;overflow:hidden}
-  .item{display:grid;grid-template-columns:96px 1fr auto;gap:16px;align-items:center;padding:12px 16px;border-top:1px solid var(--creme-2)}
+  .item{display:grid;grid-template-columns:28px 96px 1fr auto;gap:16px;align-items:center;padding:12px 16px 12px 8px;border-top:1px solid var(--creme-2);background:#fff}
   .item:first-child{border-top:none}
+  .alca{width:28px;height:44px;display:grid;place-items:center;border:none;background:none;border-radius:8px;color:var(--texto-2);font-size:1.2rem;cursor:grab;touch-action:none;user-select:none}
+  .alca:hover{background:var(--creme-2);color:var(--mata)}
+  .alca[hidden]{display:grid!important;visibility:hidden}
+  .item.arrastando{position:relative;z-index:2;background:#FFF8EC;box-shadow:0 10px 30px -12px rgba(0,0,0,.35)}
+  .item.arrastando .alca{cursor:grabbing}
+  .lista.ordenando{user-select:none}
+  .dica-ordem{color:var(--texto-2);font-size:.8rem;margin:-6px 0 12px}
   .item .th{width:96px;height:68px;border-radius:10px;background:var(--creme-2) center/cover no-repeat}
   .item h3{font-size:1.02rem;margin-bottom:2px}
   .item .meta{color:var(--texto-2);font-size:.82rem;display:flex;gap:6px 12px;flex-wrap:wrap}
@@ -99,7 +106,7 @@
   [hidden]{display:none!important}
 
   @media (max-width:640px){
-    .item{grid-template-columns:72px 1fr}
+    .item{grid-template-columns:28px 72px 1fr;gap:12px}
     .item .th{width:72px;height:54px}
     .item .bts{grid-column:1/-1;justify-content:flex-start}
     .g .w2{grid-column:1/-1}
@@ -138,8 +145,9 @@
     <div class="ferr">
       <input type="search" id="busca" placeholder="Buscar por título, código ou bairro">
       <select id="f-fin"><option value="">Todas finalidades</option><option value="venda">Venda</option><option value="locacao">Locação</option></select>
-      <select id="f-status"><option value="">Todos status</option><option value="pub">Publicados</option><option value="rasc">Ocultos</option><option value="dest">Em destaque</option></select>
+      <select id="f-status"><option value="">Todos status</option><option value="pub">Publicados</option><option value="rasc">Ocultos</option></select>
     </div>
+    <div class="dica-ordem" id="dica-ordem">Segure ⠿ e arraste para mudar a ordem dos anúncios no site.</div>
     <div class="lista" id="lista"></div>
   </main>
 </div>
@@ -204,9 +212,8 @@
         <legend>Publicação</legend>
         <div class="chk">
           <label><input type="checkbox" id="publicado" checked> Publicado no site</label>
-          <label><input type="checkbox" id="destaque"> Destaque (aparece primeiro)</label>
         </div>
-        <div class="g" style="margin-top:12px"><div><label for="ordem">Ordem</label><input type="number" id="ordem" value="0"></div></div>
+        <div class="ajuda">A posição no site é definida arrastando o anúncio na lista do painel.</div>
       </fieldset>
 
       <div class="rodape">
@@ -245,7 +252,7 @@ $('#sair').onclick=async()=>{await sb.auth.signOut();iniciar()};
 
 // ---------- lista ----------
 async function carregar(){
-  const {data,error}=await sb.from('imoveis').select('*').order('destaque',{ascending:false}).order('ordem').order('created_at',{ascending:false});
+  const {data,error}=await sb.from('imoveis').select('*').order('ordem').order('created_at',{ascending:false});
   if(error){
     $('#lista').innerHTML=`<div class="vazio">Não consegui ler a tabela <b>imoveis</b>.<br>Rode o arquivo <code>supabase/schema.sql</code> no SQL Editor do Supabase.<br><small>${e(error.message)}</small></div>`;
     $('#resumo').textContent='';return;
@@ -259,13 +266,16 @@ function desenhar(){
     if(fin&&i.finalidade!==fin)return false;
     if(st==='pub'&&!i.publicado)return false;
     if(st==='rasc'&&i.publicado)return false;
-    if(st==='dest'&&!i.destaque)return false;
     return true;
   });
+  // só dá para arrastar com a lista completa, senão a posição fica ambígua
+  const filtrado=lst.length!==todos.length;
+  $('#dica-ordem').textContent=filtrado?'Limpe a busca e os filtros para reordenar os anúncios.':'Segure ⠿ e arraste para mudar a ordem dos anúncios no site.';
   const pub=todos.filter(i=>i.publicado).length;
   $('#resumo').textContent=`${todos.length} anúncio${todos.length===1?'':'s'} · ${pub} publicado${pub===1?'':'s'}`;
   $('#lista').innerHTML=lst.length?lst.map(i=>`
-    <div class="item">
+    <div class="item" data-id="${i.id}">
+      <button type="button" class="alca" title="Arraste para mudar a ordem" aria-label="Arrastar"${filtrado?' hidden':''}>⠿</button>
       <div class="th" style="background-image:url('${e(i.fotos&&i.fotos[0]||'')}')"></div>
       <div>
         <h3>${e(i.titulo)}</h3>
@@ -274,7 +284,6 @@ function desenhar(){
           <span class="pill esc">${i.finalidade==='locacao'?'Locação':'Venda'}</span>
           ${i.finalidade==='venda'?(i.financia?'<span class="pill ok">Financia</span>':'<span class="pill warn">Não financia</span>'):''}
           ${i.publicado?'<span class="pill ok">Publicado</span>':'<span class="pill">Oculto</span>'}
-          ${i.destaque?'<span class="pill">★ Destaque</span>':''}
         </div>
       </div>
       <div class="bts">
@@ -296,11 +305,46 @@ $('#lista').onclick=async ev=>{
   }
 };
 
+// ---------- arrastar para ordenar (mouse e toque) ----------
+let arrasto=null;
+$('#lista').addEventListener('pointerdown',ev=>{
+  const h=ev.target.closest('.alca');
+  if(!h||arrasto)return;
+  ev.preventDefault();
+  const el=h.closest('.item');
+  arrasto={el,h};
+  el.classList.add('arrastando');$('#lista').classList.add('ordenando');
+  h.setPointerCapture(ev.pointerId);
+  h.onpointermove=moverArrasto;
+  h.onpointerup=h.onpointercancel=soltarArrasto;
+});
+function moverArrasto(ev){
+  const lista=$('#lista'), y=ev.clientY;
+  const prox=[...lista.querySelectorAll('.item:not(.arrastando)')].find(i=>{const r=i.getBoundingClientRect();return y<r.top+r.height/2});
+  if(prox){if(arrasto.el.nextElementSibling!==prox)lista.insertBefore(arrasto.el,prox)}
+  else if(lista.lastElementChild!==arrasto.el)lista.appendChild(arrasto.el);
+  if(y<130)scrollBy(0,-14);else if(y>innerHeight-70)scrollBy(0,14);
+}
+async function soltarArrasto(){
+  const {el,h}=arrasto;arrasto=null;
+  h.onpointermove=h.onpointerup=h.onpointercancel=null;
+  el.classList.remove('arrastando');$('#lista').classList.remove('ordenando');
+  const ids=[...$('#lista').querySelectorAll('.item')].map(d=>d.dataset.id);
+  todos.sort((a,b)=>ids.indexOf(a.id)-ids.indexOf(b.id));
+  const mudou=todos.map((i,k)=>({i,ordem:k+1})).filter(x=>x.i.ordem!==x.ordem);
+  if(!mudou.length)return;
+  mudou.forEach(x=>x.i.ordem=x.ordem);
+  const res=await Promise.all(mudou.map(x=>sb.from('imoveis').update({ordem:x.ordem}).eq('id',x.i.id)));
+  const erro=res.find(r=>r.error);
+  if(erro){toast('Erro ao salvar a ordem: '+erro.error.message,true);return carregar()}
+  toast('Ordem salva. O site já mostra assim.');
+}
+
 // ---------- formulário ----------
 $('#tipo').innerHTML=Object.entries(IMV.tipos).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
-const campos=['codigo','titulo','finalidade','tipo','preco','bairro','cidade','area_m2','area_construida_m2','quartos','suites','banheiros','vagas','descricao','ordem'];
-const marcas=['financia','aceita_fgts','aceita_permuta','publicado','destaque'];
-const numeros=['preco','area_m2','area_construida_m2','quartos','suites','banheiros','vagas','ordem'];
+const campos=['codigo','titulo','finalidade','tipo','preco','bairro','cidade','area_m2','area_construida_m2','quartos','suites','banheiros','vagas','descricao'];
+const marcas=['financia','aceita_fgts','aceita_permuta','publicado'];
+const numeros=['preco','area_m2','area_construida_m2','quartos','suites','banheiros','vagas'];
 
 function proximoCodigo(){
   const n=todos.map(i=>parseInt(String(i.codigo).replace(/\D/g,''),10)).filter(Boolean);
@@ -308,7 +352,7 @@ function proximoCodigo(){
 }
 function abrir(i){
   atual=i||null;
-  const d=i||{codigo:proximoCodigo(),cidade:'Contenda',finalidade:'venda',tipo:'casa',publicado:true,ordem:0};
+  const d=i||{codigo:proximoCodigo(),cidade:'Contenda',finalidade:'venda',tipo:'casa',publicado:true};
   campos.forEach(c=>$('#'+c).value=d[c]??'');
   marcas.forEach(c=>$('#'+c).checked=!!d[c]);
   $('#caracteristicas').value=(d.caracteristicas||[]).join('\n');
@@ -330,7 +374,8 @@ $('#f').onsubmit=async ev=>{
   ev.preventDefault();
   const reg={};
   campos.forEach(c=>{const v=$('#'+c).value.trim();reg[c]=numeros.includes(c)?(v===''?null:Number(v)):(v||null)});
-  if(reg.ordem==null)reg.ordem=0;
+  // anúncio novo entra no topo da lista; depois é só arrastar
+  if(!atual)reg.ordem=todos.length?Math.min(...todos.map(i=>i.ordem))-1:1;
   if(!reg.cidade)reg.cidade='Contenda';
   marcas.forEach(c=>reg[c]=$('#'+c).checked);
   reg.caracteristicas=$('#caracteristicas').value.split('\n').map(s=>s.trim()).filter(Boolean);

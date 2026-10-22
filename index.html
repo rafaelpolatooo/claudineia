@@ -210,7 +210,7 @@
       <button data-f="financia">Aceita financiamento</button>
     </div>
     <div class="cards" id="cards">
-      <article class="card" data-tipo="casa">
+      <article class="card" data-tipo="casa" data-fin="1">
         <div class="img"><svg><use href="#home"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202603311711439141.jpg" alt="Casa de esquina com 3 vagas em Itaperubá, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Casa</span><span class="cod">Cód. CA019</span></div>
         <div class="info">
           <h3>Casa de esquina com 3 vagas</h3>
@@ -228,7 +228,7 @@
           <div class="row"><span class="price">R$ 270.000</span><a href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%20c%C3%B3d.%20CA020%20%28Casa%20em%20terreno%20de%201.215%20m%C2%B2%2C%20Mato%20Branco%29." target="_blank" rel="noopener">Tenho interesse →</a></div>
         </div>
       </article>
-      <article class="card" data-tipo="casa">
+      <article class="card" data-tipo="casa" data-fin="1">
         <div class="img"><svg><use href="#home"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202503181413579579.jpg" alt="Casa em condomínio em Centro, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Casa</span><span class="cod">Cód. CA012</span></div>
         <div class="info">
           <h3>Casa em condomínio</h3>
@@ -237,7 +237,7 @@
           <div class="row"><span class="price">R$ 280.000</span><a href="https://wa.me/5541992329582?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20im%C3%B3vel%20c%C3%B3d.%20CA012%20%28Casa%20em%20condom%C3%ADnio%2C%20Centro%29." target="_blank" rel="noopener">Tenho interesse →</a></div>
         </div>
       </article>
-      <article class="card" data-tipo="casa">
+      <article class="card" data-tipo="casa" data-fin="1">
         <div class="img"><svg><use href="#home"/></svg><img src="https://imgs2.cdn-imobibrasil.com.br/imagens/imoveis/202509091646071141.jpg" alt="Casa alto padrão mobiliada em Centro, Contenda" loading="lazy" onerror="this.remove()"><span class="badge">Casa</span><span class="cod">Cód. CA004</span></div>
         <div class="info">
           <h3>Casa alto padrão mobiliada</h3>
@@ -386,7 +386,7 @@
   // Carrega os anúncios do Supabase. Se falhar, ficam os cards fixos do HTML.
   (async()=>{
     const {data,error}=await sb.from('imoveis').select('*').eq('publicado',true)
-      .order('destaque',{ascending:false}).order('ordem').order('created_at',{ascending:false});
+      .order('ordem').order('created_at',{ascending:false});
     if(error||!data||!data.length) return;
     const e=IMV.esc;
     document.getElementById('cards').innerHTML=data.map(i=>{
